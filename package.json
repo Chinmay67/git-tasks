@@ -1,0 +1,169 @@
+{
+  "name": "git-tasks",
+  "displayName": "git-tasks",
+  "description": "Pause, snapshot, and resume your uncommitted work — task-oriented context switching for Git repositories.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.120.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "git-tasks-sidebar",
+          "title": "Git Tasks",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "git-tasks-sidebar": [
+        {
+          "id": "git-tasks.taskList",
+          "name": "Tasks"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "git-tasks.pauseCurrentTask",
+        "title": "Pause Current Task",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.resumeTask",
+        "title": "Resume Task",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.deleteTask",
+        "title": "Delete Task",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.archiveTask",
+        "title": "Archive Task",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.renameTask",
+        "title": "Rename Task",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.editDescription",
+        "title": "Edit Description",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.viewFiles",
+        "title": "View Changed Files",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.openTaskDetails",
+        "title": "Open Task Details",
+        "category": "Git Tasks"
+      },
+      {
+        "command": "git-tasks.searchTasks",
+        "title": "Search Tasks",
+        "category": "Git Tasks"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "git-tasks.resumeTask",
+          "when": "view == git-tasks.taskList && viewItem == git-tasks.task.paused",
+          "group": "1_actions@1"
+        },
+        {
+          "command": "git-tasks.archiveTask",
+          "when": "view == git-tasks.taskList && viewItem == git-tasks.task.paused",
+          "group": "1_actions@2"
+        },
+        {
+          "command": "git-tasks.renameTask",
+          "when": "view == git-tasks.taskList && (viewItem == git-tasks.task.paused || viewItem == git-tasks.task.active || viewItem == git-tasks.task.archived)",
+          "group": "2_edit@1"
+        },
+        {
+          "command": "git-tasks.editDescription",
+          "when": "view == git-tasks.taskList && (viewItem == git-tasks.task.paused || viewItem == git-tasks.task.active || viewItem == git-tasks.task.archived)",
+          "group": "2_edit@2"
+        },
+        {
+          "command": "git-tasks.viewFiles",
+          "when": "view == git-tasks.taskList && (viewItem == git-tasks.task.paused || viewItem == git-tasks.task.archived)",
+          "group": "3_view@1"
+        },
+        {
+          "command": "git-tasks.openTaskDetails",
+          "when": "view == git-tasks.taskList && (viewItem == git-tasks.task.paused || viewItem == git-tasks.task.active || viewItem == git-tasks.task.archived)",
+          "group": "3_view@2"
+        },
+        {
+          "command": "git-tasks.deleteTask",
+          "when": "view == git-tasks.taskList && (viewItem == git-tasks.task.paused || viewItem == git-tasks.task.archived)",
+          "group": "4_danger@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "git-tasks.deleteTask",
+          "when": "false"
+        },
+        {
+          "command": "git-tasks.archiveTask",
+          "when": "false"
+        },
+        {
+          "command": "git-tasks.renameTask",
+          "when": "false"
+        },
+        {
+          "command": "git-tasks.editDescription",
+          "when": "false"
+        },
+        {
+          "command": "git-tasks.viewFiles",
+          "when": "false"
+        },
+        {
+          "command": "git-tasks.openTaskDetails",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.120.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.56.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
