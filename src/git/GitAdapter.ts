@@ -136,7 +136,11 @@ export class GitAdapter {
   }
 
   async cleanWorkingTree(): Promise<void> {
+    // Step 1: reset the index back to HEAD (unstages all staged changes)
+    await runGit(['reset', 'HEAD', '--'], this.repositoryRoot);
+    // Step 2: restore tracked files in the working tree to HEAD
     await runGit(['checkout', '--', '.'], this.repositoryRoot);
+    // Step 3: remove untracked files and directories
     await runGit(['clean', '-fd'], this.repositoryRoot);
   }
 
